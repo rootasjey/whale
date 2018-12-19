@@ -91,6 +91,14 @@ Response:
 
 If you want the server to automatically restart on files change, use `yarn run dev`.
 
+## Third party lib
+
+This project uses:
+
+* [Twit](https://github.com/ttezel/twit) to request Twitter API from node.js
+* [Apollo server](https://apollographql.com)  to create a GraphQL server
+* [GraphQL](https://graphql.github.io) module
+
 ## Licence
 
 MIT.
