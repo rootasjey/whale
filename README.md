@@ -141,9 +141,9 @@ If you want the server to automatically restart on files change, use `yarn run d
 
 This project uses:
 
-* [Twit](https://github.com/ttezel/twit) to request Twitter API from node.js
 * [Apollo server](https://apollographql.com)  to create a GraphQL server
 * [GraphQL](https://graphql.github.io) module
+* [twitter-lite](https://github.com/draftbit/twitter-lite) to request Twitter API from node.js
 
 ## Licence
 
