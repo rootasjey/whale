@@ -1,19 +1,25 @@
-const Twit = require('twit');
-const config = require('./config.json');
+const { persistentInstance }  = require('./twit');
+const { tweetSubFilter }      = require('./sub');
 
-var twitInstance = new Twit(config);
+const twit = persistentInstance();
 
 module.exports = {
   Query: {
-    version: () => '0.1.0',
+    version: () => '0.2.0',
 
     tweets: (root, args) => {
-      const {pokemon, count} = args;
+      const {word, count} = args;
 
-      return twitInstance.get('search/tweets', { q: `${pokemon} since:2011-07-11`, count: count })
+      return twit.get('search/tweets', { q: `${word} since:2011-07-11`, count: count })
         .then((result) => {
           return result.data;
         });
-    }
+    },
+  },
+
+  Subscription: {
+    tweetAdded: {
+      subscribe: tweetSubFilter,
+    },
   },
 };

@@ -32,28 +32,39 @@ You can either use the available URL at the top if this page or deploy your own 
 
 ## Features
 
-* [Search](#search)
+* Query
+  * [Search](#search)
 
-### Search
+* Subscription
+  * [Streaming Tweet](#streaming-tweet)
+
+### Query
+
+Use queries to request data.
+
+#### Search
 
 You can search tweets related to terms. All tweets containing these terms will be returned.
 
 Request:
 
 ```gql
+
 query {
-  tweets(pokemon: "charmander") {
+  tweets(word: "charmander") {
     statuses {
       id,
       text
     }
   }
 }
+
 ```
 
 Response:
 
 ```json
+
 {
   "data": {
     "tweets": {
@@ -70,6 +81,41 @@ Response:
     }
   }
 }
+
+```
+
+### Subscription
+
+Use subscriptions to receive data through websockets.
+
+#### Streaming Tweet
+
+You can subscribe to a tweets streaming for a particular word.
+
+Request:
+
+```gql
+
+subscription {
+  tweetAdded(word: "nasa") {
+    created_at
+    text
+  }
+}
+
+```
+
+```json
+
+{
+  "data": {
+    "tweetAdded": {
+      "created_at": "Fri Dec 28 21:00:46 +0000 2018",
+      "text": "RT @SPACEdotcom: NASA's New Horizons Ready for Historic Flyby of Ultima Thule in the Kuiper Belt https://t.co/p6jga9qdnc https://t.co/mxduX…"
+    }
+  }
+}
+
 ```
 
 ## Development

@@ -1,7 +1,7 @@
 {
-  "name": "foss-twitter-api",
-  "version": "0.1.0",
-  "description": "A GraphQL twitter service",
+  "name": "whale",
+  "version": "0.2.0",
+  "description": "A open GraphQL twitter service",
   "main": "index.js",
   "author": "Jeremie CORPINOT",
   "license": "MIT",

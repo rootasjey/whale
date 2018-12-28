@@ -3,10 +3,14 @@ const { gql } = require('apollo-server');
 module.exports = gql`
   type Query {
     "Search tweets by topic"
-    tweets(pokemon: String, count: Int = 10): SearchResult,
+    tweets(word: String, count: Int = 10): SearchResult,
 
     "API version"
     version: String,
+  }
+
+  type Subscription {
+    tweetAdded(word: String!): Tweet,
   }
 
   type SearchResult {
