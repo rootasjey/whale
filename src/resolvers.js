@@ -1,7 +1,7 @@
-const { persistentInstance }  = require('./twit');
-const { tweetSubFilter }      = require('./sub');
+const { client }          = require('./twitter');
+const { tweetSubFilter }  = require('./subResolvers');
 
-const twit = persistentInstance();
+const Twitter = client();
 
 module.exports = {
   Query: {
@@ -10,7 +10,7 @@ module.exports = {
     tweets: (root, args) => {
       const {word, count} = args;
 
-      return twit.get('search/tweets', { q: `${word} since:2011-07-11`, count: count })
+      return Twitter.get('search/tweets', { q: `${word} since:2011-07-11`, count: count })
         .then((result) => {
           return result.data;
         });

@@ -3,7 +3,7 @@ const { ApolloServer } = require('apollo-server');
 const resolvers = require('./src/resolvers');
 const typeDefs  = require('./src/types');
 
-const { watch, stopWatch } = require('./src/sub');
+const { watch, stopWatch } = require('./src/subResolvers');
 
 const server = new ApolloServer({
   typeDefs,

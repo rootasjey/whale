@@ -1,6 +1,6 @@
-const { newInstance } = require('./twit');
+const { client } = require('./twitter');
 
-let twit = newInstance();
+const Twitter = client();
 
 const { PubSub, withFilter } = require('apollo-server');
 
@@ -25,7 +25,7 @@ module.exports = {
     }
   ),
   watch(word = '') {
-    console.log(`watch ${word}`);
+    // console.log(`watch ${word}`);
 
     if (streamsPool[word]) {
       streamsPool[word].clientsCount++;
@@ -33,13 +33,15 @@ module.exports = {
     }
 
     const onTweet = (tweet) => {
-      console.log(`new tweet for ${word}`)
-      console.log(tweet);
+      // console.log(`new tweet for ${word}`)
+      // console.log(tweet);
       pubsub.publish(TWEET_ADDED, { tweetAdded: tweet, word });
     }
 
-    const stream = twit.stream('statuses/filter', { track: [word] });
-    stream.on('tweet', onTweet);
+    const stream = Twitter
+      .stream('statuses/filter', { track: word })
+      .on('data', onTweet)
+      .on("error", error => console.error("error", error));
 
     streamsPool[word] = {
       clientsCount: 1,
@@ -57,13 +59,12 @@ module.exports = {
     wave.clientsCount--;
 
     if (wave.clientsCount < 1) {
-      wave.stream.off('tweet', wave.onTweet);
-      // wave.stream.stop();
-      delete streamsPool[word];
+      wave.stream.off('data', wave.onTweet);
 
-      // if (Object.keys(streamsPool).length === 0) {
-      //   twit = newInstance();
-      // }
+      process.nextTick(() => {
+        wave.stream.destroy();
+        delete streamsPool[word];
+      });
     }
   }
 }
