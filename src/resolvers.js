@@ -12,7 +12,7 @@ module.exports = {
 
       return Twitter.get('search/tweets', { q: `${word} since:2011-07-11`, count: count })
         .then((result) => {
-          return result.data;
+          return result;
         });
     },
   },
