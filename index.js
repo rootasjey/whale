@@ -6,7 +6,8 @@ const typeDefs  = require('./src/types');
 const { watch, stopWatch } = require('./src/subResolvers');
 
 const server = new ApolloServer({
-  typeDefs,
+  introspection: true,
+  playground: true,
   resolvers,
   subscriptions: {
     onConnect(connectionParams, websocket, context) {
@@ -29,7 +30,8 @@ const server = new ApolloServer({
 
       stopWatch(word);
     }
-  }
+  },
+  typeDefs,
 });
 
 server.listen()

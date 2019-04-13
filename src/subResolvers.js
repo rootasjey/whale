@@ -18,23 +18,21 @@ const streamsPool = {
 
 module.exports = {
   pubsub,
+
   tweetSubFilter: withFilter(
     () => pubsub.asyncIterator(TWEET_ADDED),
     (payload, variables) => {
       return payload.word === variables.word;
     }
   ),
-  watch(word = '') {
-    // console.log(`watch ${word}`);
 
+  watch(word = '') {
     if (streamsPool[word]) {
       streamsPool[word].clientsCount++;
       return;
     }
 
     const onTweet = (tweet) => {
-      // console.log(`new tweet for ${word}`)
-      // console.log(tweet);
       pubsub.publish(TWEET_ADDED, { tweetAdded: tweet, word });
     }
 
@@ -49,6 +47,7 @@ module.exports = {
       stream,
     };
   },
+
   stopWatch(word = '') {
     if (!word) { return; }
 
